@@ -15,14 +15,14 @@ export default {
     <div class="cover-home">
         <div class="left-side">
             <div class="cover-total">
-                <h1 class="total">
+                <h2 class="total">
                     Total Price
-                </h1>
+                </h2>
                 <button>Price</button>
             </div>
         </div>
         <div class="container-order">
-            <h2>Order Lists</h2>
+            <h1>Order Lists</h1>
             <ul class="responsive-table">
                 <li class="table-header">
                     <div class="col col-1">No.</div>
@@ -42,7 +42,7 @@ export default {
     display: flex;
 
     .left-side {
-        flex-basis: 18%;
+        width: 20rem;
         margin-top: 80px;
 
         .cover-total {
@@ -52,15 +52,14 @@ export default {
             gap: 15px;
             border: solid 1px rgba(0, 0, 0, 0.15);
             margin-left: 30px;
-            padding: 20px;
-            padding-bottom: 30px;
+            padding: 15px;
             margin-right: 20px;
             border-radius: 4px;
             box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
         }
 
         .total {
-            font-size: 1.5rem;
+            font-size: 1.5em;
         }
 
         button {
@@ -73,7 +72,7 @@ export default {
             color: #fff;
             cursor: pointer;
             display: inline-flex;
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 600;
             justify-content: center;
             line-height: 1.25;
@@ -85,12 +84,17 @@ export default {
             -webkit-user-select: none;
             touch-action: manipulation;
             vertical-align: baseline;
-            width: 15em;
+            width: 100%;
         }
 
         button:hover {
             transform: translateY(-1px);
         }
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 2vh;
     }
 }
 </style>

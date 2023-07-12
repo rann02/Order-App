@@ -1,31 +1,54 @@
 <script>
 export default {
     data() {
-        return {
-        };
+        return {};
     },
-    methods: {
-    },
+    methods: {},
 };
 </script>
 
 <template>
     <form class="container">
-        <input type="text" placeholder="Username" />
-        <input type="text" placeholder="Password" />
-        <button class="submit">SIGN IN</button>
+        <select>
+            <option value="0">Select one:</option>
+            <option value="1">Samsung</option>
+            <option value="2">Iphone</option>
+        </select>
+        <input type="number" class="col1" min="0" placeholder="Price" />
+        <input type="number" class="col2" min="0" placeholder="Quantity" />
+        <button class="submit">SUBMIT</button>
     </form>
 </template>
 
 <style lang="scss" scoped>
 .container {
     display: flex;
-    flex-direction: column;
-    width: 30vw;
-    gap: 7px;
+    width: 50vw;
+    gap: 15px;
     padding: 40px;
+    align-items: center;
 
     input {
+        border: none;
+        height: 3em;
+        transition: 0.2s;
+        outline: 0;
+        border-radius: 4px;
+        padding: 10px;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    select {
+        background-color: #fff;
         width: 100%;
         border: none;
         height: 3em;
@@ -33,6 +56,14 @@ export default {
         outline: 0;
         border-radius: 4px;
         padding: 10px;
+    }
+
+    .col1 {
+        width: 80%;
+    }
+
+    .col2 {
+        width: 30%;
     }
 
     input:focus {
@@ -49,7 +80,7 @@ export default {
         color: rgba(0, 0, 0, 0.85);
         cursor: pointer;
         display: inline-flex;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 600;
         justify-content: center;
         line-height: 1.25;
@@ -83,8 +114,9 @@ export default {
     }
 
     .submit {
-        width: 100%;
+        width: 40%;
         color: #fff;
+        height: 2.4em;
     }
 }
 </style>
