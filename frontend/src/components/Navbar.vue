@@ -11,7 +11,7 @@ export default {
             <Logo />
             <div>
                 <RouterLink to="/" class="navlink"> Add Order </RouterLink>
-                <router-link to="/" class="navlink"> Order List </router-link>
+                <router-link to="/orders" class="navlink"> Order List </router-link>
             </div>
         </div>
     </nav>
