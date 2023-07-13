@@ -15,9 +15,33 @@ module.exports = (sequelize, DataTypes) => {
   Order.init(
     {
       imgUrl: DataTypes.STRING,
-      name: DataTypes.STRING,
-      price: DataTypes.INTEGER,
-      quantity: DataTypes.INTEGER,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Name required",
+          },
+        },
+      },
+      price: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Price required",
+          },
+        },
+      },
+      quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Quantity required",
+          },
+        },
+      },
       UserId: DataTypes.INTEGER,
     },
     {

@@ -25,8 +25,7 @@ class Controller {
         token: access_token,
       });
     } catch (error) {
-      console.log(error.name);
-      res.json({ message: "error" });
+      next(error);
     }
   }
 }
