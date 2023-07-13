@@ -1,31 +1,46 @@
 <script>
-export default {};
+import { mapActions } from "pinia";
+import { useOrderAppStore } from "../stores/index";
+export default {
+  props: ["order"],
+  data() {
+    return {};
+  },
+  methods: {
+    ...mapActions(useOrderAppStore, ["rupiah"]),
+  },
+};
 </script>
 <template>
-    <li class="table-row">
-        <div class="col col-1 action" data-label="No.">1</div>
-        <div class="col col-2" data-label="Photo">
-            <img class="image" alt="photo"
-                src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" />
-        </div>
-        <div class="col col-3 action" data-label="Product Name">name</div>
-        <div class="col col-4 action" data-label="Price">Price</div>
-        <div class="col col-5 action" data-label="Quantity">Quantity</div>
-    </li>
+  <li class="table-row">
+    <div class="col col-1 action" data-label="No.">{{ order.id }}</div>
+    <div class="col col-2" data-label="Photo">
+      <img class="image" alt="photo" :src="order.imgUrl" />
+    </div>
+    <div class="col col-3 action" data-label="Product Name">
+      {{ order.name }}
+    </div>
+    <div class="col col-4 action" data-label="Price">
+      {{ rupiah(order.price) }}
+    </div>
+    <div class="col col-5 action" data-label="Quantity">
+      {{ order.quantity }}
+    </div>
+  </li>
 </template>
 <style lang="scss" scoped>
 .action {
-    display: flex;
-    gap: 15px;
-    align-items: center;
+  display: flex;
+  gap: 15px;
+  align-items: center;
 }
 
 .image {
-    height: 8em;
-    border-radius: 4px;
+  height: 8em;
+  border-radius: 4px;
 }
 
 .image:hover {
-    scale: 1.2;
+  scale: 1.2;
 }
 </style>

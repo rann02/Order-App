@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import Swal from "sweetalert2";
 export const useOrderAppStore = defineStore("appStore", {
   state: () => ({
     api: "http://localhost:3000",
@@ -9,44 +10,36 @@ export const useOrderAppStore = defineStore("appStore", {
   }),
   getters: {},
   actions: {
-    async fetchBook() {
+    async fetchProducts() {
       try {
         const { data } = await axios({
           method: "GET",
-          url: `${this.api}/books/lists`,
+          url: `${this.api}/products`,
+          headers: { access_token: localStorage.getItem("access_token") },
         });
-        this.books = data;
+        this.products = data;
       } catch (error) {
         console.log(error);
       }
     },
-    async fetchBookDetail(id) {
+    async fetchOrders() {
       try {
         const { data } = await axios({
           method: "GET",
-          url: `${this.api}/books/${id}`,
+          headers: { access_token: localStorage.getItem("access_token") },
+          url: `${this.api}/orders`,
         });
-        this.bookdetail = data;
+        this.orders = data;
       } catch (error) {
         console.log(error);
       }
     },
-    async fetchComment(id) {
-      try {
-        const { data } = await axios({
-          method: "GET",
-          url: `${this.api}/comments/${id}`,
-        });
-        this.comments = data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    register(dataRedister) {
+    createOrder(dataOrder) {
       return axios({
         method: "POST",
-        url: `${this.api}/users/register`,
-        data: dataRedister,
+        url: `${this.api}/order`,
+        headers: { access_token: localStorage.getItem("access_token") },
+        data: dataOrder,
       });
     },
     login(dataLogin) {
@@ -56,109 +49,38 @@ export const useOrderAppStore = defineStore("appStore", {
         data: dataLogin,
       });
     },
-    comment(id, text) {
-      return axios({
-        method: "POST",
-        url: `${this.api}/comments/${id}`,
-        headers: { access_token: localStorage.getItem("access_token") },
-        data: {
-          commentText: text,
-        },
+    rupiah(number) {
+      return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      }).format(number);
+    },
+    showAlert() {
+      Swal.fire({
+        position: "top-end",
+        toast: true,
+        icon: "success",
+        title: `Welcome!`,
+        showConfirmButton: false,
+        timer: 1500,
       });
     },
-    async getCommentById(id) {
-      try {
-        const { data } = await axios({
-          method: "GET",
-          url: `${this.api}/comments/edit/${id}`,
-          headers: { access_token: localStorage.getItem("access_token") },
-        });
-        this.commentEdit = data.commentText;
-        // this.bookdetail = data
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async patchComment(id) {
-      try {
-        const { data } = await axios({
-          method: "PATCH",
-          url: `${this.api}/comments/edit/${id}`,
-          headers: { access_token: localStorage.getItem("access_token") },
-          data: {
-            commentText: this.commentEdit,
-          },
-        });
-        console.log(data.message);
-      } catch (error) {
-        console.log(error.response);
-      }
-    },
-    createPurchase(id, price) {
-      return axios({
-        method: "POST",
-        url: `${this.api}/purchases/${id}`,
-        headers: { access_token: localStorage.getItem("access_token") },
-        data: {
-          totalPrice: price,
-        },
+    showWarning(message) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: message,
       });
     },
-    async fetchPurchase() {
-      try {
-        const { data } = await axios({
-          method: "GET",
-          url: `${this.api}/purchases`,
-          headers: { access_token: localStorage.getItem("access_token") },
-        });
-        this.purchases = data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    deletePurchase(id) {
-      return axios({
-        method: "DELETE",
-        url: `${this.api}/purchases/${id}`,
-        headers: { access_token: localStorage.getItem("access_token") },
+    showOrderAlert(message) {
+      Swal.fire({
+        position: "top-end",
+        toast: true,
+        icon: "success",
+        title: message,
+        showConfirmButton: false,
+        timer: 1500,
       });
-    },
-    logout() {
-      localStorage.clear();
-    },
-    async updatePayment() {
-      try {
-        const { data } = await axios({
-          url: `${this.api}/purchases/status`,
-          method: "PATCH",
-          headers: { access_token: localStorage.getItem("access_token") },
-        });
-        this.fetchPurchase();
-        this.router.push("/");
-        console.log(data.messege);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async checkout() {
-      try {
-        const { data } = await axios({
-          url: `${this.api}/purchases/midtrans`,
-          method: "POST",
-          headers: { access_token: localStorage.getItem("access_token") },
-        });
-        // console.log(data);
-        const cb = this.updatePayment;
-        window.snap.pay(`${data.token}`, {
-          onSuccess: function (result) {
-            /* You may add your own implementation here */
-            // alert("payment success!"); console.log(result);
-            cb();
-          },
-        });
-      } catch (error) {
-        console.log(error);
-      }
     },
   },
 });
