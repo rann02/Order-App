@@ -1,17 +1,22 @@
 <script>
 import { RouterLink } from "vue-router";
 import Logo from "./Logo.vue";
+import { useOrderAppStore } from "../stores/index";
+import { mapState } from 'pinia'
 export default {
     components: { RouterLink, Logo },
+    computed: {
+        ...mapState(useOrderAppStore, ['isLogin'])
+    },
 };
 </script>
 <template>
     <nav class="navbar-cover">
         <div class="content">
             <Logo />
-            <div>
-                <RouterLink to="/create-order" class="navlink"> Add Order </RouterLink>
-                <router-link to="/orders" class="navlink"> Order List </router-link>
+            <div v-if="isLogin">
+                <RouterLink to="/create-order" class="navlink"> Add Order</RouterLink>
+                <RouterLink  to="/orders" class="navlink"> Order List </RouterLink >
             </div>
         </div>
     </nav>

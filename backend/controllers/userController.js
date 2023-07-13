@@ -7,7 +7,7 @@ class Controller {
     try {
       const { username, password } = req.body;
       if (!username || !password) {
-        throw { name: "EmailorPasswordRequired" };
+        throw { name: "UsernameorPasswordRequired" };
       }
       const user = await User.findOne({ where: { username } });
       if (!user) {

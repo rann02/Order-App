@@ -23,4 +23,14 @@ const router = createRouter({
   ],
 });
 
+router.beforeEach((to, from, next) => {
+  if (!localStorage.access_token && to.name !== "login") {
+    next("/");
+  } else if (localStorage.access_token && to.name === "login") {
+    next("/create-order");
+  } else {
+    next();
+  }
+});
+
 export default router;

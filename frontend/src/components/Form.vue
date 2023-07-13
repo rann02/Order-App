@@ -1,18 +1,39 @@
 <script>
+import { useOrderAppStore } from "../stores/index";
+import { mapState, mapWritableState, mapActions } from 'pinia'
 export default {
     data() {
         return {
+            username: '',
+            password: ''
         };
     },
+    computed: {
+        ...mapWritableState(useOrderAppStore, ['isLogin']),
+    },
     methods: {
+        ...mapActions(useOrderAppStore, ['login']),
+        async loginTriger() {
+            try {
+                const { data } = await this.login({
+                    username: this.username,
+                    password: this.password
+                })
+                localStorage.setItem('access_token', data.token)
+                this.isLogin = true
+                this.$router.push('/create-order')
+            } catch (error) {
+                console.log(error.response);
+            }
+        }
     },
 };
 </script>
 
 <template>
-    <form class="container">
-        <input type="text" placeholder="Username" />
-        <input type="text" placeholder="Password" />
+    <form @submit.prevent="loginTriger" class="container">
+        <input v-model="username" type="text" placeholder="Username" />
+        <input v-model="password" type="password" placeholder="Password" />
         <button class="submit">SIGN IN</button>
     </form>
 </template>

@@ -15,13 +15,13 @@ const errorHandler = (err, req, res, next) => {
     res.status(404).json({
       messsage: err.message,
     });
-  } else if (err.name == "EmailorPasswordRequired") {
+  } else if (err.name == "UsernameorPasswordRequired") {
     res.status(400).json({
-      message: "email or password required",
+      message: "username or password required",
     });
   } else if (err.name == "InvalidCredential") {
     res.status(401).json({
-      message: "email or password incorrrect",
+      message: "username or password incorrrect",
     });
   } else if (err.name == "ProductIdEmpty") {
     res.status(401).json({
