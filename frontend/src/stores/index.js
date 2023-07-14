@@ -19,7 +19,10 @@ export const useOrderAppStore = defineStore("appStore", {
         });
         this.products = data;
       } catch (error) {
-        console.log(error);
+        if (!!error.response.data.message) {
+          this.showWarning(error.response.data.message);
+        }
+        console.log(error.message);
       }
     },
     async fetchOrders() {
@@ -31,7 +34,10 @@ export const useOrderAppStore = defineStore("appStore", {
         });
         this.orders = data;
       } catch (error) {
-        console.log(error);
+        if (!!error.response.data.message) {
+          this.showWarning(error.response.data.message);
+        }
+        console.log(error.message);
       }
     },
     createOrder(dataOrder) {

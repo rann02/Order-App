@@ -13,7 +13,7 @@ const errorHandler = (err, req, res, next) => {
     });
   } else if (err.name === "NoOrder") {
     res.status(404).json({
-      messsage: err.message,
+      message: err.message,
     });
   } else if (err.name == "UsernameorPasswordRequired") {
     res.status(400).json({
